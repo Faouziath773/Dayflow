@@ -44,45 +44,6 @@ npm run build
 
 # Prévisualiser le build
 npm run preview
-```
-
-## 🚀 Déploiement sur Vercel
-
-### Option 1 : Via l'interface Vercel (Recommandé)
-
-1. **Connecter votre repository GitHub**
-   - Allez sur [vercel.com](https://vercel.com)
-   - Cliquez sur "New Project"
-   - Importez votre repository GitHub
-
-2. **Configuration automatique**
-   - Vercel détectera automatiquement que c'est un projet Vite
-   - Les paramètres suivants seront appliqués automatiquement :
-     - **Framework Preset** : Vite
-     - **Build Command** : `npm run build`
-     - **Output Directory** : `dist`
-     - **Install Command** : `npm install`
-
-3. **Déployer**
-   - Cliquez sur "Deploy"
-   - Votre application sera disponible en quelques secondes !
-
-### Option 2 : Via Vercel CLI
-
-```bash
-# Installer Vercel CLI globalement
-npm i -g vercel
-
-# Se connecter à Vercel
-vercel login
-
-# Déployer
-vercel
-
-# Pour la production
-vercel --prod
-```
-
 ## 📁 Structure du projet
 
 ```
