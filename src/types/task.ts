@@ -12,6 +12,18 @@ export interface Task {
   duration: number; // en minutes
   energyLevel: EnergyLevel;
   completed?: boolean;
+  /**
+   * Date logique de la journée à laquelle la tâche appartient (YYYY-MM-DD)
+   */
+  dayDate?: string;
+  /**
+   * Heure à laquelle l'utilisateur souhaite réaliser la tâche (HH:mm)
+   */
+  targetTime?: string;
+  /**
+   * Nombre de minutes avant l'heure cible pour recevoir une notification
+   */
+  remindBeforeMinutes?: number;
   scheduledStartTime?: string; // format HH:mm
   scheduledEndTime?: string; // format HH:mm
 }

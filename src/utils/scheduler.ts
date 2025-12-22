@@ -13,6 +13,8 @@ import {
 interface SchedulerConfig {
   startHour?: number; // heure de début (défaut: 8)
   endHour?: number; // heure de fin (défaut: 20)
+  startMinute?: number; // minute de début (défaut: 0)
+  endMinute?: number; // minute de fin (défaut: 0)
   breakDuration?: number; // durée des pauses entre tâches en minutes (défaut: 15)
 }
 
@@ -26,8 +28,13 @@ export function scheduleTasks(
   const {
     startHour = 8,
     endHour = 20,
+    startMinute = 0,
+    endMinute = 0,
     breakDuration = 15,
   } = config;
+
+  const startTotalMinutes = startHour * 60 + startMinute;
+  const endTotalMinutes = endHour * 60 + endMinute;
 
   // Trier les tâches par priorité : haute énergie d'abord, puis durée
   const sortedTasks = [...tasks].sort((a, b) => {
@@ -45,8 +52,8 @@ export function scheduleTasks(
   });
 
   const scheduled: ScheduledTask[] = [];
-  let currentTime = minutesToTime(startHour * 60);
-  const endTimeMinutes = endHour * 60;
+  let currentTime = minutesToTime(startTotalMinutes);
+  const endTimeMinutes = endTotalMinutes;
 
   for (const task of sortedTasks) {
     // Trouver le meilleur créneau pour cette tâche
@@ -158,8 +165,18 @@ function findBestTimeSlot(
 
 /**
  * Génère un ID unique pour une tâche
+ * Utilise UUID afin d'être compatible avec la colonne uuid de la base Supabase.
  */
 export function generateTaskId(): string {
-  return `task-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+  if (typeof crypto !== 'undefined' && 'randomUUID' in crypto) {
+    return crypto.randomUUID();
+  }
+
+  // Fallback très improbable en environnement moderne, mais garde une forme de pseudo‑UUID
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+    const r = (Math.random() * 16) | 0;
+    const v = c === 'x' ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
+  });
 }
 

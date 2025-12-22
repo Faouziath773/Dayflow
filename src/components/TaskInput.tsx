@@ -13,6 +13,8 @@ export function TaskInput({ onAddTask }: TaskInputProps) {
   const [name, setName] = useState('');
   const [duration, setDuration] = useState(30);
   const [energyLevel, setEnergyLevel] = useState<EnergyLevel>('medium');
+  const [targetTime, setTargetTime] = useState<string>('');
+  const [remindBeforeMinutes, setRemindBeforeMinutes] = useState<number>(10);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -21,10 +23,14 @@ export function TaskInput({ onAddTask }: TaskInputProps) {
         name: name.trim(),
         duration,
         energyLevel,
+        targetTime: targetTime || undefined,
+        remindBeforeMinutes: targetTime ? remindBeforeMinutes : undefined,
       });
       setName('');
       setDuration(30);
       setEnergyLevel('medium');
+      setTargetTime('');
+      setRemindBeforeMinutes(10);
     }
   };
 
@@ -68,6 +74,44 @@ export function TaskInput({ onAddTask }: TaskInputProps) {
             className="w-full px-4 py-3.5 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all duration-200 text-gray-900"
             required
           />
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label htmlFor="task-time" className="block text-sm font-semibold text-gray-700 mb-2.5">
+              Heure souhaitée (optionnel)
+            </label>
+            <input
+              id="task-time"
+              type="time"
+              value={targetTime}
+              onChange={(e) => setTargetTime(e.target.value)}
+              className="w-full px-4 py-3.5 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all duration-200 text-gray-900"
+            />
+          </div>
+
+          <div>
+            <label
+              htmlFor="task-reminder"
+              className="block text-sm font-semibold text-gray-700 mb-2.5"
+            >
+              Rappel avant (min)
+            </label>
+            <select
+              id="task-reminder"
+              value={remindBeforeMinutes}
+              onChange={(e) => setRemindBeforeMinutes(Number(e.target.value))}
+              className="w-full px-4 py-3.5 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all duration-200 text-gray-900 bg-white"
+              disabled={!targetTime}
+            >
+              <option value={0}>À l&apos;heure exacte</option>
+              <option value={5}>5 minutes avant</option>
+              <option value={10}>10 minutes avant</option>
+              <option value={15}>15 minutes avant</option>
+              <option value={30}>30 minutes avant</option>
+              <option value={60}>1 heure avant</option>
+            </select>
+          </div>
         </div>
 
         <div>

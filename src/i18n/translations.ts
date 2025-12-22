@@ -73,6 +73,8 @@ export interface Translations {
     quickLinks: string;
     planner: string;
     howItWorks: string;
+    privacyPolicy: string;
+    terms: string;
     followMe: string;
     madeWith: string;
     by: string;
@@ -109,7 +111,7 @@ export const translations: Record<Language, Translations> = {
       },
     },
     planner: {
-      title: 'Planificateur',
+      title: 'Planifier votre journée',
       addTask: 'Ajouter une nouvelle tâche',
       taskName: 'Nom de la tâche',
       duration: 'Durée (minutes)',
@@ -156,8 +158,10 @@ export const translations: Record<Language, Translations> = {
     footer: {
       description: 'Planifiez votre journée intelligemment. Organisez vos tâches selon votre niveau d\'énergie.',
       quickLinks: 'Liens rapides',
-      planner: 'Planificateur',
+      planner: 'Planifier votre journée',
       howItWorks: 'Comment ça marche',
+      privacyPolicy: 'Politique de confidentialité',
+      terms: 'Conditions générales',
       followMe: 'Suivez-moi',
       madeWith: 'Made with',
       by: 'par',
@@ -241,6 +245,8 @@ export const translations: Record<Language, Translations> = {
       quickLinks: 'Quick links',
       planner: 'Planner',
       howItWorks: 'How it works',
+      privacyPolicy: 'Privacy policy',
+      terms: 'Terms & Conditions',
       followMe: 'Follow me',
       madeWith: 'Made with',
       by: 'by',

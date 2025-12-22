@@ -244,20 +244,41 @@ export function Sidebar({ tasks, scheduledTasks, isScheduled, onNavigateToHome, 
             <div>
               <label className="block text-gray-600 mb-1.5">{t.sidebar.startHour}</label>
               {isEditingSettings ? (
-                <input
-                  type="number"
-                  min="0"
-                  max="23"
-                  value={tempSettings.startHour}
-                  onChange={(e) => {
-                    const value = parseInt(e.target.value) || 0;
-                    setTempSettings({ ...tempSettings, startHour: Math.max(0, Math.min(23, value)) });
-                  }}
-                  className="w-full px-3 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 transition-colors"
-                />
+                <div className="flex gap-2">
+                  <input
+                    type="number"
+                    min="0"
+                    max="23"
+                    value={tempSettings.startHour}
+                    onChange={(e) => {
+                      const value = parseInt(e.target.value) || 0;
+                      setTempSettings({
+                        ...tempSettings,
+                        startHour: Math.max(0, Math.min(23, value)),
+                      });
+                    }}
+                    className="w-1/2 px-3 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 transition-colors"
+                  />
+                  <select
+                    value={tempSettings.startMinute ?? 0}
+                    onChange={(e) =>
+                      setTempSettings({
+                        ...tempSettings,
+                        startMinute: parseInt(e.target.value) || 0,
+                      })
+                    }
+                    className="w-1/2 px-3 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 transition-colors bg-white"
+                  >
+                    <option value={0}>00</option>
+                    <option value={15}>15</option>
+                    <option value={30}>30</option>
+                    <option value={45}>45</option>
+                  </select>
+                </div>
               ) : (
                 <span className="font-semibold text-gray-900 block">
-                  {settings.startHour.toString().padStart(2, '0')}:00
+                  {settings.startHour.toString().padStart(2, '0')}:
+                  {(settings.startMinute ?? 0).toString().padStart(2, '0')}
                 </span>
               )}
             </div>
@@ -265,20 +286,41 @@ export function Sidebar({ tasks, scheduledTasks, isScheduled, onNavigateToHome, 
             <div>
               <label className="block text-gray-600 mb-1.5">{t.sidebar.endHour}</label>
               {isEditingSettings ? (
-                <input
-                  type="number"
-                  min="1"
-                  max="24"
-                  value={tempSettings.endHour}
-                  onChange={(e) => {
-                    const value = parseInt(e.target.value) || 20;
-                    setTempSettings({ ...tempSettings, endHour: Math.max(1, Math.min(24, value)) });
-                  }}
-                  className="w-full px-3 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 transition-colors"
-                />
+                <div className="flex gap-2">
+                  <input
+                    type="number"
+                    min="1"
+                    max="24"
+                    value={tempSettings.endHour}
+                    onChange={(e) => {
+                      const value = parseInt(e.target.value) || 20;
+                      setTempSettings({
+                        ...tempSettings,
+                        endHour: Math.max(1, Math.min(24, value)),
+                      });
+                    }}
+                    className="w-1/2 px-3 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 transition-colors"
+                  />
+                  <select
+                    value={tempSettings.endMinute ?? 0}
+                    onChange={(e) =>
+                      setTempSettings({
+                        ...tempSettings,
+                        endMinute: parseInt(e.target.value) || 0,
+                      })
+                    }
+                    className="w-1/2 px-3 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 transition-colors bg-white"
+                  >
+                    <option value={0}>00</option>
+                    <option value={15}>15</option>
+                    <option value={30}>30</option>
+                    <option value={45}>45</option>
+                  </select>
+                </div>
               ) : (
                 <span className="font-semibold text-gray-900 block">
-                  {settings.endHour.toString().padStart(2, '0')}:00
+                  {settings.endHour.toString().padStart(2, '0')}:
+                  {(settings.endMinute ?? 0).toString().padStart(2, '0')}
                 </span>
               )}
             </div>

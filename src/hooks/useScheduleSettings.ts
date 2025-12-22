@@ -3,12 +3,16 @@ import { useLocalStorage } from './useLocalStorage';
 export interface ScheduleSettings {
   startHour: number;
   endHour: number;
+  startMinute: number;
+  endMinute: number;
   breakDuration: number; // en minutes
 }
 
 const defaultSettings: ScheduleSettings = {
   startHour: 8,
   endHour: 20,
+  startMinute: 0,
+  endMinute: 0,
   breakDuration: 15,
 };
 

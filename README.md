@@ -11,7 +11,9 @@ Dayflow est une application web intelligente de planification de journée qui or
 - 📊 **Timeline visuelle** : Suivez votre journée avec une timeline colorée et intuitive
 - 📈 **Statistiques** : Consultez vos statistiques de productivité
 - 🌍 **Multilingue** : Disponible en français et en anglais
-- 💾 **Persistance locale** : Vos données sont sauvegardées dans le navigateur
+- 🔐 **Comptes utilisateurs** : Connexion / inscription sécurisée via Supabase
+- ☁️ **Synchro multi‑appareils** : Vos tâches sont associées à votre compte et disponibles sur tous vos navigateurs
+- 💾 **Persistance locale** : Les utilisateurs non connectés conservent leurs données dans le navigateur
 - 📱 **Responsive** : Fonctionne parfaitement sur mobile, tablette et desktop
 
 ## 🚀 Technologies
@@ -50,16 +52,38 @@ npm run preview
 dayflow/
 ├── src/
 │   ├── components/      # Composants React réutilisables
-│   ├── contexts/         # Contextes React (i18n)
-│   ├── hooks/            # Hooks personnalisés
-│   ├── i18n/             # Traductions (fr, en)
-│   ├── pages/            # Pages de l'application
-│   ├── types/            # Types TypeScript
-│   └── utils/             # Utilitaires
+│   ├── contexts/        # Contextes React (i18n, auth)
+│   ├── hooks/           # Hooks personnalisés
+│   ├── i18n/            # Traductions (fr, en)
+│   ├── pages/           # Pages de l'application (home, planner, auth)
+│   ├── types/           # Types TypeScript
+│   └── utils/           # Utilitaires
 ├── public/                # Assets statiques
 ├── dist/                  # Build de production (généré)
 └── vercel.json            # Configuration Vercel
 ```
+
+## 🔐 Authentification & synchro
+
+Dayflow utilise **Supabase** pour :
+
+- gérer les comptes utilisateurs (email + mot de passe, email de confirmation)
+- stocker les tâches dans une base **PostgreSQL** sécurisée
+- appliquer des règles de sécurité par utilisateur (Row Level Security)
+
+### Variables d'environnement
+
+Créez un fichier `.env.local` à la racine du projet :
+
+```env
+VITE_SUPABASE_URL=https://votre-projet.supabase.co
+VITE_SUPABASE_ANON_KEY=VOTRE_CLE_ANON
+```
+
+Les utilisateurs :
+
+- **non connectés** : les tâches sont stockées en `localStorage`
+- **connectés** : les tâches sont chargées et sauvegardées dans la table `tasks` de Supabase
 
 ## 🎨 Personnalisation
 

@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Trash2, Clock, Check } from 'lucide-react';
+import { Trash2, Clock, Check, Bell } from 'lucide-react';
 import type { Task } from '../types/task';
 
 interface TaskCardProps {
@@ -55,18 +55,40 @@ export function TaskCard({ task, onRemove, onToggleComplete }: TaskCardProps) {
           }`}>
             {task.name}
           </h3>
-          <div className="flex items-center gap-4 text-sm">
-            <span className={`flex items-center gap-1.5 font-medium ${
-              isCompleted ? 'text-gray-400' : 'text-gray-600'
-            }`}>
+          <div className="flex flex-wrap items-center gap-3 text-sm">
+            <span
+              className={`flex items-center gap-1.5 font-medium ${
+                isCompleted ? 'text-gray-400' : 'text-gray-600'
+              }`}
+            >
               <Clock className="w-4 h-4" />
               {task.duration} min
             </span>
-            <span className={`px-3 py-1 rounded-full text-xs font-semibold shadow-sm ${
-              isCompleted ? 'bg-gray-200 text-gray-500' : 'bg-white'
-            }`}>
+            <span
+              className={`px-3 py-1 rounded-full text-xs font-semibold shadow-sm ${
+                isCompleted ? 'bg-gray-200 text-gray-500' : 'bg-white'
+              }`}
+            >
               {energyLabels[task.energyLevel]}
             </span>
+            {task.targetTime && (
+              <span
+                className={`flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-full border ${
+                  isCompleted
+                    ? 'border-gray-200 text-gray-400'
+                    : 'border-blue-100 text-blue-700 bg-blue-50'
+                }`}
+              >
+                <Bell className="w-3 h-3" />
+                {task.targetTime}
+                {typeof task.remindBeforeMinutes === 'number' &&
+                  task.remindBeforeMinutes > 0 && (
+                    <span className="text-[11px] text-blue-500">
+                      (-{task.remindBeforeMinutes} min)
+                    </span>
+                  )}
+              </span>
+            )}
           </div>
         </div>
         
