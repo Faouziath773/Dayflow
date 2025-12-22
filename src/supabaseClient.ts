@@ -10,6 +10,11 @@ if (!supabaseUrl || !supabaseAnonKey) {
   );
 }
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+// On fournit des valeurs par défaut pour éviter le crash si les variables sont manquantes
+// L'app ne fonctionnera pas mais au moins elle ne plantera pas
+export const supabase = createClient(
+  supabaseUrl || 'https://placeholder.supabase.co',
+  supabaseAnonKey || 'placeholder-key'
+);
 
 
