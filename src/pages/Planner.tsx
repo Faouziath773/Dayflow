@@ -12,6 +12,7 @@ import { Timeline } from '../components/Timeline';
 import { DayFeedback } from '../components/DayFeedback';
 import { Sidebar } from '../components/Sidebar';
 import { LanguageSelector } from '../components/LanguageSelector';
+import { AppFooter } from '../components/AppFooter';
 import { useScheduleSettings } from '../hooks/useScheduleSettings';
 import type { Task } from '../types/task';
 import { useLocalStorage } from '../hooks/useLocalStorage';
@@ -125,75 +126,79 @@ export function Planner({ onNavigateToHome }: PlannerProps) {
   };
 
   return (
-    <div 
-      className="min-h-screen flex"
+    <div
+      className="min-h-screen flex flex-col"
       style={{
-        background: 'linear-gradient(135deg, #e0f2fe 0%, #e9d5ff 50%, #fce7f3 100%)',
+        background:
+          'linear-gradient(135deg, #e0f2fe 0%, #e9d5ff 50%, #fce7f3 100%)',
       }}
     >
-      {/* Sidebar - cachée sur mobile, visible sur desktop */}
-      <div className={`hidden lg:block ${sidebarOpen ? 'lg:block' : ''}`}>
-        <Sidebar
-          tasks={tasks}
-          scheduledTasks={scheduledTasks}
-          isScheduled={isScheduled}
-          onNavigateToHome={onNavigateToHome}
-          onSettingsChange={resetSchedule}
-        />
-      </div>
-      
-      {/* Sidebar mobile - overlay */}
-      {sidebarOpen && (
-        <>
-          <div 
-            className="fixed inset-0 bg-black/50 z-40 lg:hidden"
-            onClick={() => setSidebarOpen(false)}
+      <div className="flex flex-1">
+        {/* Sidebar - cachée sur mobile, visible sur desktop */}
+        <div className={`hidden lg:block ${sidebarOpen ? 'lg:block' : ''}`}>
+          <Sidebar
+            tasks={tasks}
+            scheduledTasks={scheduledTasks}
+            isScheduled={isScheduled}
+            onNavigateToHome={onNavigateToHome}
+            onSettingsChange={resetSchedule}
           />
-          <div className="fixed left-0 top-0 h-full z-50 lg:hidden">
-            <Sidebar
-              tasks={tasks}
-              scheduledTasks={scheduledTasks}
-              isScheduled={isScheduled}
-              onNavigateToHome={onNavigateToHome}
-              onSettingsChange={resetSchedule}
-            />
-          </div>
-        </>
-      )}
-      
-      <div className="flex-1 overflow-y-auto w-full lg:w-auto">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-6 sm:mb-10">
-          <div className="flex items-center gap-3">
-            <button
-              onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="lg:hidden p-2 hover:bg-white/50 rounded-lg transition-colors"
-              aria-label="Toggle sidebar"
-            >
-              {sidebarOpen ? (
-                <XIcon className="w-6 h-6 text-gray-700" />
-              ) : (
-                <Menu className="w-6 h-6 text-gray-700" />
-              )}
-            </button>
-            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900">{t.planner.title}</h1>
-          </div>
-          <div className="flex items-center gap-3">
-            <LanguageSelector />
-            <button
-              onClick={() => {
-                void signOut();
-                onNavigateToHome();
-              }}
-              className="px-3 sm:px-4 py-2 text-gray-600 hover:text-gray-800 hover:bg-gray-100 rounded-lg transition-all duration-200 text-xs sm:text-sm font-medium"
-            >
-              Se déconnecter
-            </button>
-          </div>
         </div>
 
-        <div className="max-w-4xl mx-auto">
+        {/* Sidebar mobile - overlay */}
+        {sidebarOpen && (
+          <>
+            <div
+              className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+              onClick={() => setSidebarOpen(false)}
+            />
+            <div className="fixed left-0 top-0 h-full z-50 lg:hidden">
+              <Sidebar
+                tasks={tasks}
+                scheduledTasks={scheduledTasks}
+                isScheduled={isScheduled}
+                onNavigateToHome={onNavigateToHome}
+                onSettingsChange={resetSchedule}
+              />
+            </div>
+          </>
+        )}
+
+        <div className="flex-1 overflow-y-auto w-full lg:w-auto">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8">
+            {/* Header */}
+            <div className="flex items-center justify-between mb-6 sm:mb-10">
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={() => setSidebarOpen(!sidebarOpen)}
+                  className="lg:hidden p-2 hover:bg-white/50 rounded-lg transition-colors"
+                  aria-label="Toggle sidebar"
+                >
+                  {sidebarOpen ? (
+                    <XIcon className="w-6 h-6 text-gray-700" />
+                  ) : (
+                    <Menu className="w-6 h-6 text-gray-700" />
+                  )}
+                </button>
+                <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900">
+                  {t.planner.title}
+                </h1>
+              </div>
+              <div className="flex items-center gap-3">
+                <LanguageSelector />
+                <button
+                  onClick={() => {
+                    void signOut();
+                    onNavigateToHome();
+                  }}
+                  className="px-3 sm:px-4 py-2 text-gray-600 hover:text-gray-800 hover:bg-gray-100 rounded-lg transition-all duration-200 text-xs sm:text-sm font-medium"
+                >
+                  Se déconnecter
+                </button>
+              </div>
+            </div>
+
+            <div className="max-w-4xl mx-auto">
           {/* Section d'ajout de tâches */}
           {showTaskInput && (
             <div className="mb-8">
@@ -395,9 +400,12 @@ export function Planner({ onNavigateToHome }: PlannerProps) {
               </div>
             </motion.div>
           )}
-        </div>
+            </div>
+          </div>
         </div>
       </div>
+
+      <AppFooter />
     </div>
   );
 }
